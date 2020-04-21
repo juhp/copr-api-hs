@@ -1,0 +1,42 @@
+name:                copr
+version:             0.1
+synopsis:            copr api
+description:         copr client api
+homepage:            http://docs.servant.dev/
+category:            Network
+license:             BSD3
+license-file:        FIXME
+author:              Jens Petersen
+maintainer:          Jens Petersen <petersen@redhat.com>
+build-type:          Simple
+cabal-version:       >=1.10
+tested-with:
+  GHC==8.0.2
+  GHC==8.2.2
+  GHC==8.4.4
+  GHC==8.6.5
+  GHC==8.8.3
+
+library
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  exposed-modules:     Web.Fedora.Copr
+
+  build-depends:
+                base >= 4.7 && <5
+              , aeson
+              , attoparsec
+              , base-compat
+              , bytestring
+              , containers
+              , directory
+              , http-api-data
+              , http-client
+              , http-media
+              , http-types
+              , mtl
+              , string-conversions
+              , text
+              , transformers
+              , servant-client
+              , servant
