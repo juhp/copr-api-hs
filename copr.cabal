@@ -5,7 +5,7 @@ synopsis:            Copr API client libary
 description:         Fedora copr client api library
 homepage:            https://github.com/juhp/copr-hs
 bug-reports:         https://github.com/juhp/copr-hs/issues
-license:             GPL-3.0-only
+license:             GPL-3.0
 license-file:        LICENSE
 author:              Jens Petersen
 maintainer:          Jens Petersen <petersen@redhat.com>
@@ -18,26 +18,36 @@ tested-with:         GHC == 8.0.2
                      GHC == 8.2.2
                      GHC == 8.4.4
                      GHC == 8.6.5
-                     GHC == 8.8.3
+                     GHC == 8.8.4
+                     GHC == 8.10.1
 
 source-repository head
   type:                git
   location:            https://github.com/juhp/copr-hs.git
 
+flag microlens
+  description:       Use smaller microlens instead of lens
+  default:           False
+
 library
   default-language:    Haskell2010
   ghc-options:         -Wall
   exposed-modules:     Web.Fedora.Copr
+                       Web.Fedora.Copr.API
 
   build-depends:
                 base >= 4.7 && <5
               , aeson
               , bytestring
-              , containers
               , directory
               , filepath
               , http-conduit
               , text
+              , unordered-containers
+  if flag(microlens)
+      build-depends:   microlens, microlens-aeson
+  else
+      build-depends:   lens, lens-aeson
 
   ghc-options:         -Wall
   if impl(ghc >= 8.0)
