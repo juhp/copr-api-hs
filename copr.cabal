@@ -41,7 +41,6 @@ library
               , aeson
               , bytestring
               , directory
-              , filepath
               , http-query
               , text
               , unordered-containers

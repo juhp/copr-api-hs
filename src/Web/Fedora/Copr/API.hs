@@ -35,7 +35,6 @@ where
 
 import Data.Aeson.Types
 import Network.HTTP.Query
-import System.FilePath ((</>))
 
 -- # Projects
 
@@ -74,7 +73,7 @@ coprSearchProjects server query = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_10
 coprGetBuild :: String -> Int -> IO Value
 coprGetBuild server bid = do
-  let path = "build" </> show bid
+  let path = "build" +/+ show bid
   queryCopr server path []
 
 -- | get srpm build
@@ -82,7 +81,7 @@ coprGetBuild server bid = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_22
 coprGetBuildSourceChroot :: String -> Int -> IO Value
 coprGetBuildSourceChroot server bid = do
-  let path = "build/source-chroot" </> show bid
+  let path = "build/source-chroot" +/+ show bid
   queryCopr server path []
 
 -- | get build source config
@@ -90,7 +89,7 @@ coprGetBuildSourceChroot server bid = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_34
 coprGetBuildSourceConfig :: String -> Int -> IO Value
 coprGetBuildSourceConfig server bid = do
-  let path = "build/source-build-config" </> show bid
+  let path = "build/source-build-config" +/+ show bid
   queryCopr server path []
 
 -- | get list of packages
@@ -108,7 +107,7 @@ coprGetBuildPackageList server params = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build_chroot.py#_8
 coprGetBuildChroot :: String -> Int -> String -> IO Value
 coprGetBuildChroot server bid chroot = do
-  let path = "build-chroot" </> show bid </> chroot
+  let path = "build-chroot" +/+ show bid +/+ chroot
   queryCopr server path []
 
 -- | list of build chroots
@@ -116,7 +115,7 @@ coprGetBuildChroot server bid chroot = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build_chroot.py#_25
 coprGetBuildChrootList :: String -> Int -> IO Value
 coprGetBuildChrootList server bid = do
-  let path = "build-chroot/list" </> show bid
+  let path = "build-chroot/list" +/+ show bid
   queryCopr server path []
 
 -- | get build config for chroot
@@ -124,7 +123,7 @@ coprGetBuildChrootList server bid = do
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build_chroot.py#_44
 coprGetBuildChrootConfig :: String -> Int -> String -> IO Value
 coprGetBuildChrootConfig server bid chroot = do
-  let path = "build-chroot/build-config" </> show bid </> chroot
+  let path = "build-chroot/build-config" +/+ show bid +/+ chroot
   queryCopr server path []
 
 -- # Mock chroot
@@ -187,5 +186,5 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 -- | low-level query
 queryCopr :: String -> String -> Query -> IO Value
 queryCopr server path params =
-  let url = "https://" ++ server </> "api_3"
+  let url = "https://" ++ server +/+ "api_3"
   in webAPIQuery url path params
