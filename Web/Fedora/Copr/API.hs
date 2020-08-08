@@ -34,24 +34,8 @@ module Web.Fedora.Copr.API
 where
 
 import Data.Aeson.Types
-#if (defined(MIN_VERSION_http_conduit) && MIN_VERSION_http_conduit(2,3,3))
-#else
-import Data.ByteString (ByteString)
-#endif
-import qualified Data.ByteString.Char8 as B
-import Data.Maybe
-import Data.Text (Text)
-import Network.HTTP.Simple
+import Network.HTTP.Query
 import System.FilePath ((</>))
-
-#if (defined(MIN_VERSION_http_conduit) && MIN_VERSION_http_conduit(2,3,1))
-#else
-type Query = [(ByteString, Maybe ByteString)]
-#endif
-#if (defined(MIN_VERSION_http_conduit) && MIN_VERSION_http_conduit(2,3,3))
-#else
-type QueryItem = (ByteString, Maybe ByteString)
-#endif
 
 -- # Projects
 
@@ -202,40 +186,6 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 
 -- | low-level query
 queryCopr :: String -> String -> Query -> IO Value
-queryCopr server path params = do
-  let url = "https://" ++ server </> "api_3" </> path
-  req <- setRequestQueryString params <$> parseRequest url
-#if (defined(VERSION_aeson_pretty))
-  putStrLn $ url ++ B.unpack (queryString req)
-  res <- getResponseBody <$> httpJSON req
-  BL.putStrLn $ encodePretty res
-  return res
-#else
-  getResponseBody <$> httpJSON req
-#endif
-
--- | Maybe create a query key
-maybeKey :: String -> Maybe String -> Query
-maybeKey _ Nothing = []
-maybeKey k mval = [(B.pack k, fmap B.pack mval)]
-
--- | make a singleton key-value Query
-makeKey :: String -> String -> Query
-makeKey k val = [(B.pack k, Just (B.pack val))]
-
--- | make a key-value QueryItem
-makeItem :: String -> String -> QueryItem
-makeItem k val = (B.pack k, Just (B.pack val))
-
--- | looks up key in object
-lookupKey :: FromJSON a => Text -> Object -> Maybe a
-lookupKey k = parseMaybe (.: k)
-
--- -- | looks up Text from key in object
--- lookupText :: Text -> Object -> Maybe Text
--- lookupText k = parseMaybe (.: k)
-
--- | like lookupKey but raises an error if no key found
-lookupKey' :: FromJSON a => Text -> Object -> a
-lookupKey' k obj =
-  fromMaybe (error ("no key: " ++ show k)) (lookupKey k obj)
+queryCopr server path params =
+  let url = "https://" ++ server </> "api_3"
+  in webAPIQuery url path params

@@ -41,7 +41,7 @@ library
               , bytestring
               , directory
               , filepath
-              , http-conduit
+              , http-query
               , text
               , unordered-containers
   if flag(microlens)

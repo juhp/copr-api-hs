@@ -1,1 +1,5 @@
 resolver: lts-15.16
+
+extra-deps:
+  - git: https://github.com/juhp/http-query.git
+    commit: e5896fabfed02800e0dd8d0933315b02705efa56

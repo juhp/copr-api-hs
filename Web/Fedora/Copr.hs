@@ -20,11 +20,6 @@ import Data.Aeson.Lens
 import Lens.Micro
 import Lens.Micro.Aeson
 #endif
-#if (defined(VERSION_aeson_pretty))
-import Data.Aeson.Encode.Pretty
-import qualified Data.ByteString.Lazy.Char8 as BL
-import Network.HTTP.Conduit (queryString)
-#endif
 
 import qualified Data.HashMap.Lazy as H
 import Data.List (sort)
