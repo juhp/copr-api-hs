@@ -186,5 +186,5 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 -- | low-level query
 queryCopr :: String -> String -> Query -> IO Value
 queryCopr server path params =
-  let url = "https://" ++ server +/+ "api_3"
-  in webAPIQuery url path params
+  let url = "https://" ++ server +/+ "api_3" +/+ path
+  in webAPIQuery url params
