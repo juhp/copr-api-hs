@@ -3,8 +3,6 @@ stack-all:
 	@echo
 	stack --resolver lts build
 	@echo
-	stack --resolver lts-15 build
-	@echo
 	stack --resolver lts-14 build
 	@echo
 	stack --resolver lts-13 build
