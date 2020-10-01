@@ -13,14 +13,7 @@ module Web.Fedora.Copr
   (coprChroots)
 where
 
-#if (defined(VERSION_lens_aeson))
-import Control.Lens
-import Data.Aeson.Lens
-#else
-import Lens.Micro
-import Lens.Micro.Aeson
-#endif
-
+import Data.Aeson.Types (Object)
 import qualified Data.HashMap.Lazy as H
 import Data.List (sort)
 import Data.Text (Text)
@@ -30,6 +23,9 @@ import Web.Fedora.Copr.API
 coprChroots :: String -> String -> String -> IO [Text]
 coprChroots server owner project = do
   proj <- coprGetProject server owner project
-  case proj ^? key "chroot_repos" . _Object of
-    Nothing -> return []
+  case lookupKey "chroot_repos" proj :: Maybe Object of
+    Nothing ->
+        case lookupKey "error" proj of
+          Just err -> error err
+          Nothing -> return []
     Just obj -> return $ (reverse . sort . H.keys) obj

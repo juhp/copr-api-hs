@@ -41,7 +41,7 @@ import Network.HTTP.Query
 -- | List project details
 --
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/project.py#_9
-coprGetProject :: String -> String -> String -> IO Value
+coprGetProject :: String -> String -> String -> IO Object
 coprGetProject server owner project = do
   let path = "project"
       params = [makeItem "ownername" owner, makeItem "projectname" project]
@@ -184,7 +184,7 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 
 
 -- | low-level query
-queryCopr :: String -> String -> Query -> IO Value
+queryCopr :: FromJSON a => String -> String -> Query -> IO a
 queryCopr server path params =
   let url = "https://" ++ server +/+ "api_3" +/+ path
   in webAPIQuery url params
