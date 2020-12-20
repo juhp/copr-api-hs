@@ -10,7 +10,8 @@ Copr REST client library
 -}
 
 module Web.Fedora.Copr
-  (coprChroots)
+  (coprChroots,
+   fedoraCopr)
 where
 
 import Data.Aeson.Types (Object)
@@ -29,3 +30,6 @@ coprChroots server owner project = do
           Just err -> error err
           Nothing -> return []
     Just obj -> return $ (reverse . sort . H.keys) obj
+
+fedoraCopr :: String
+fedoraCopr = "copr.fedorainfracloud.org"
