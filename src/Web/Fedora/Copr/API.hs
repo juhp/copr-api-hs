@@ -71,7 +71,7 @@ coprSearchProjects server query = do
 -- | get build
 --
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_10
-coprGetBuild :: String -> Int -> IO Value
+coprGetBuild :: String -> Int -> IO Object
 coprGetBuild server bid = do
   let path = "build" +/+ show bid
   queryCopr server path []
@@ -79,7 +79,7 @@ coprGetBuild server bid = do
 -- | get srpm build
 --
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_22
-coprGetBuildSourceChroot :: String -> Int -> IO Value
+coprGetBuildSourceChroot :: String -> Int -> IO Object
 coprGetBuildSourceChroot server bid = do
   let path = "build/source-chroot" +/+ show bid
   queryCopr server path []
@@ -87,7 +87,7 @@ coprGetBuildSourceChroot server bid = do
 -- | get build source config
 --
 -- https://pagure.io/copr/copr/blob/master/f/python/copr/v3/proxies/build.py#_34
-coprGetBuildSourceConfig :: String -> Int -> IO Value
+coprGetBuildSourceConfig :: String -> Int -> IO Object
 coprGetBuildSourceConfig server bid = do
   let path = "build/source-build-config" +/+ show bid
   queryCopr server path []
