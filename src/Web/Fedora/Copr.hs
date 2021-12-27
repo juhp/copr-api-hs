@@ -15,7 +15,12 @@ module Web.Fedora.Copr
 where
 
 import Data.Aeson.Types (Object)
-import qualified Data.HashMap.Lazy as H
+#if MIN_VERSION_aeson(2,0,0)
+import Data.Aeson.Key (toText)
+import qualified Data.Aeson.KeyMap as M
+#else
+import qualified Data.HashMap.Lazy as M
+#endif
 import Data.List (sort)
 import Data.Text (Text)
 
@@ -29,7 +34,10 @@ coprChroots server owner project = do
         case lookupKey "error" proj of
           Just err -> error err
           Nothing -> return []
-    Just obj -> return $ (reverse . sort . H.keys) obj
+    Just obj -> return $ (reverse . sort . map toText . M.keys) obj
+#if !MIN_VERSION_aeson(2,0,0)
+      where toText = id
+#endif
 
 fedoraCopr :: String
 fedoraCopr = "copr.fedorainfracloud.org"
