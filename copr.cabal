@@ -1,11 +1,11 @@
 cabal-version:       1.22
 name:                copr
-version:             0.1
+version:             0.1.0
 synopsis:            Copr API client libary
 description:         Fedora copr client api library
 homepage:            https://github.com/juhp/copr-hs
 bug-reports:         https://github.com/juhp/copr-hs/issues
-license:             GPL-3.0
+license:             GPL-3
 license-file:        LICENSE
 author:              Jens Petersen <petersen@redhat.com>
 maintainer:          Jens Petersen <petersen@redhat.com>
@@ -53,3 +53,5 @@ library
   if impl(ghc >= 8.4)
     ghc-options:       -Wmissing-export-lists
                        -Wpartial-fields
+  if impl(ghc >= 8.10)
+    ghc-options:       -Wunused-packages
