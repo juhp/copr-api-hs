@@ -26,7 +26,11 @@ import Data.Text (Text)
 
 import Web.Fedora.Copr.API
 
-coprChroots :: String -> String -> String -> IO [Text]
+-- | Get the list of chroot of a user's copr project
+coprChroots :: String -- ^ server
+            -> String -- ^ owner
+            -> String -- ^ project
+            -> IO [Text] -- ^ list of chroots
 coprChroots server owner project = do
   proj <- coprGetProject server owner project
   case lookupKey "chroot_repos" proj :: Maybe Object of
@@ -39,5 +43,6 @@ coprChroots server owner project = do
       where toText = id
 #endif
 
+-- | the host name of the Fedora Copr API server
 fedoraCopr :: String
 fedoraCopr = "copr.fedorainfracloud.org"
