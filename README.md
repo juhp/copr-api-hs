@@ -8,9 +8,8 @@
 Copr API client Haskell library
 
 [Copr](https://pagure.io/copr/copr) is an unofficial community package
-[build service](https://copr.fedorainfracloud.org/) for Fedora -
-it builds outside the main official Fedora repositories.
+[build service](https://copr.fedorainfracloud.org/) for Fedora,
+which builds outside the main official Fedora repositories.
 
-
-- "API" details: https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies
-- Docs: https://python-copr.readthedocs.io/en/latest/index.html
+- "API" details: <https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies>
+- Docs: <https://python-copr.readthedocs.io/en/latest/index.html>
