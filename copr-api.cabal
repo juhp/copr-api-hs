@@ -2,7 +2,7 @@ cabal-version:       1.22
 name:                copr-api
 version:             0.1.0
 synopsis:            Copr API client libary
-description:         Fedora copr-api client api library
+description:         Fedora Copr buildsystem client api library
 homepage:            https://github.com/juhp/copr-api-hs
 bug-reports:         https://github.com/juhp/copr-api-hs/issues
 license:             GPL-3
