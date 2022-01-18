@@ -26,7 +26,7 @@ import Data.Text (Text)
 
 import Web.Fedora.Copr.API
 
--- | Get the list of chroot of a user's copr project
+-- | Get the list of chroots of a user's copr project
 coprChroots :: String -- ^ server
             -> String -- ^ owner
             -> String -- ^ project
