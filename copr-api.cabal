@@ -35,8 +35,6 @@ library
   build-depends:
                 base >= 4.7 && <5
               , aeson
-              , bytestring
-              , directory
               , http-query
               , text
               , unordered-containers
