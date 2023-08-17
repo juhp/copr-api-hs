@@ -35,6 +35,7 @@ module Web.Fedora.Copr.API
 where
 
 import Data.Aeson.Types
+import Data.List (intercalate)
 import Network.HTTP.Query
 
 -- # Projects
@@ -187,11 +188,12 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 -- | monitor info for the latest project chroot builds.
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/monitor.py#_16
-coprMonitorProject :: String -> String -> String -> IO Object
-coprMonitorProject server owner project = do
+coprMonitorProject :: String -> String -> String -> [String] -> IO Object
+coprMonitorProject server owner project fields = do
   let path = "monitor"
       params = [makeItem "ownername" owner,
-                makeItem "projectname" project]
+                makeItem "projectname" project,
+                makeItem "additional_fields" (intercalate "," fields)]
   queryCopr server path params
 
 -- | low-level API query
