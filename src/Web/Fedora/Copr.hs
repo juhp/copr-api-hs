@@ -21,12 +21,13 @@ import qualified Data.Aeson.KeyMap as M
 #else
 import qualified Data.HashMap.Lazy as M
 #endif
-import Data.List (sort)
+import Data.List (sortBy)
+import Data.Ord (comparing, Down(Down))
 import Data.Text (Text)
 
 import Web.Fedora.Copr.API
 
--- | Get the list of chroots of a user's copr project
+-- | Get list of chroots of a user's copr project, sorted in descending order.
 coprChroots :: String -- ^ server
             -> String -- ^ owner
             -> String -- ^ project
@@ -38,7 +39,7 @@ coprChroots server owner project = do
         case lookupKey "error" proj of
           Just err -> error err
           Nothing -> return []
-    Just obj -> return $ (reverse . sort . map toText . M.keys) obj
+    Just obj -> return $ (sortBy (comparing Down) . map toText . M.keys) obj
 #if !MIN_VERSION_aeson(2,0,0)
       where toText = id
 #endif
