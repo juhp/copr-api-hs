@@ -3,7 +3,7 @@
 [![Hackage](https://img.shields.io/hackage/v/copr-api.svg?logo=haskell)](https://hackage.haskell.org/package/copr-api)
 [![Stackage Lts](http://stackage.org/package/copr-api/badge/lts)](http://stackage.org/lts/package/copr-api)
 [![Stackage Nightly](http://stackage.org/package/copr-api/badge/nightly)](http://stackage.org/nightly/package/copr-api)
-[![GPL-3.0-only license](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg)](LICENSE)
+[![GPL-3.0-or-later license](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 
 Copr API client Haskell library
 

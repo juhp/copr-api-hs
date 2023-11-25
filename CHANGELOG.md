@@ -2,8 +2,8 @@
 
 `copr-hs` uses [PVP Versioning](https://pvp.haskell.org).
 
-## 0.2.0 (2022-01-19)
-- API function now return Object instead of Value
+## 0.2.0 (2023-11-25)
+- API functions now return Object instead of Value
 - add coprMonitorProject
 - add coprGetBuildList
 - haddock urls updated to point to main branch
