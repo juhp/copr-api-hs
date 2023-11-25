@@ -43,7 +43,10 @@ import Network.HTTP.Query
 -- | List project details
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/project.py#_9
-coprGetProject :: String -> String -> String -> IO Object
+coprGetProject :: String -- ^ server
+               -> String -- ^ owner
+               -> String -- ^ project
+               -> IO Object
 coprGetProject server owner project = do
   let path = "project"
       params = [makeItem "ownername" owner, makeItem "projectname" project]
@@ -52,7 +55,9 @@ coprGetProject server owner project = do
 -- | List projects of owner
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/project.py#_37
-coprGetProjectsList :: String -> String -> IO Object
+coprGetProjectsList :: String -- ^ server
+                    -> String -- ^ owner
+                    -> IO Object
 -- FIXME limit=int or maybe pagination?
 coprGetProjectsList server owner = do
   let path = "project/list"
@@ -62,7 +67,9 @@ coprGetProjectsList server owner = do
 -- | search projects by query string
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/project.py#_43
-coprSearchProjects :: String -> String -> IO Object
+coprSearchProjects :: String -- ^ server
+                   -> String -- ^ query
+                   -> IO Object
 coprSearchProjects server query = do
   let path = "project/search"
       params = makeKey "query" query
@@ -73,7 +80,9 @@ coprSearchProjects server query = do
 -- | get build
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build.py#_10
-coprGetBuild :: String -> Int -> IO Object
+coprGetBuild :: String -- ^ server
+             -> Int -- ^ build id
+             -> IO Object
 coprGetBuild server bid = do
   let path = "build" +/+ show bid
   queryCopr server path []
@@ -81,7 +90,9 @@ coprGetBuild server bid = do
 -- | get srpm build
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build.py#_22
-coprGetBuildSourceChroot :: String -> Int -> IO Object
+coprGetBuildSourceChroot :: String -- ^ server
+                         -> Int -- ^ build id
+                         -> IO Object
 coprGetBuildSourceChroot server bid = do
   let path = "build/source-chroot" +/+ show bid
   queryCopr server path []
@@ -89,7 +100,9 @@ coprGetBuildSourceChroot server bid = do
 -- | get build source config
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build.py#_34
-coprGetBuildSourceConfig :: String -> Int -> IO Object
+coprGetBuildSourceConfig :: String -- ^ server
+                         -> Int -- ^ build id
+                         -> IO Object
 coprGetBuildSourceConfig server bid = do
   let path = "build/source-build-config" +/+ show bid
   queryCopr server path []
@@ -97,7 +110,13 @@ coprGetBuildSourceConfig server bid = do
 -- | get list of builds
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build.py#_56
-coprGetBuildList :: String -> String -> String -> Query -> IO Object
+--
+-- @since 0.2.0
+coprGetBuildList :: String -- ^ server
+                 -> String -- ^ owner
+                 -> String -- ^ project
+                 -> Query -- ^ optional parameters ("packagename", "status", "pagination")
+                 -> IO Object
 coprGetBuildList server owner project params = do
   let path = "build/list"
       params' = [makeItem "ownername" owner,
@@ -109,7 +128,10 @@ coprGetBuildList server owner project params = do
 -- | get build chroot
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build_chroot.py#_8
-coprGetBuildChroot :: String -> Int -> String -> IO Object
+coprGetBuildChroot :: String -- ^ server
+                   -> Int -- ^ build id
+                   -> String -- ^ chroot
+                   -> IO Object
 coprGetBuildChroot server bid chroot = do
   let path = "build-chroot" +/+ show bid +/+ chroot
   queryCopr server path []
@@ -117,7 +139,9 @@ coprGetBuildChroot server bid chroot = do
 -- | list of build chroots
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build_chroot.py#_25
-coprGetBuildChrootList :: String -> Int -> IO Object
+coprGetBuildChrootList :: String -- ^ server
+                       -> Int -- ^ build id
+                       -> IO Object
 coprGetBuildChrootList server bid = do
   let path = "build-chroot/list" +/+ show bid
   queryCopr server path []
@@ -125,7 +149,10 @@ coprGetBuildChrootList server bid = do
 -- | get build config for chroot
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build_chroot.py#_44
-coprGetBuildChrootConfig :: String -> Int -> String -> IO Object
+coprGetBuildChrootConfig :: String -- ^ server
+                         -> Int -- ^ build id
+                         -> String -- ^ chroot
+                         -> IO Object
 coprGetBuildChrootConfig server bid chroot = do
   let path = "build-chroot/build-config" +/+ show bid +/+ chroot
   queryCopr server path []
@@ -135,7 +162,8 @@ coprGetBuildChrootConfig server bid chroot = do
 -- | list of all available mock chroots
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/mock_chroot.py
-coprMockChrootList :: String -> IO Object
+coprMockChrootList :: String -- ^ server
+                   -> IO Object
 coprMockChrootList server = do
   let path = "mock-chroots/list"
   queryCopr server path []
@@ -145,7 +173,11 @@ coprMockChrootList server = do
 -- | Get project package details
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/package.py#_9
-coprGetPackage :: String -> String -> String -> String -> IO Object
+coprGetPackage :: String -- ^ server
+               -> String -- ^ owner
+               -> String -- ^ project
+               -> String -- ^ package
+               -> IO Object
 coprGetPackage server owner project package = do
   let path = "package"
       params = [makeItem "ownername" owner,
@@ -156,7 +188,10 @@ coprGetPackage server owner project package = do
 -- | List project packages
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/package.py#_28
-coprGetPackageList :: String -> String -> String -> IO Object
+coprGetPackageList :: String -- ^ server
+                   -> String -- ^ owner
+                   -> String -- ^ project
+                   -> IO Object
 coprGetPackageList server owner project = do
   let path = "package/list"
       params = [makeItem "ownername" owner, makeItem "projectname" project]
@@ -167,7 +202,11 @@ coprGetPackageList server owner project = do
 -- | get build chroot
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/project_chroot.py#_10
-coprGetProjectChroot :: String -> String -> String -> String -> IO Object
+coprGetProjectChroot :: String -- ^ server
+                     -> String -- ^ owner
+                     -> String -- ^ project
+                     -> String -- ^ chroot
+                     -> IO Object
 coprGetProjectChroot server owner project chroot = do
   let path = "project-chroot"
       params = [makeItem "ownername" owner,
@@ -178,7 +217,10 @@ coprGetProjectChroot server owner project chroot = do
 -- | list of build chroots
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/project_chroot.py#_29
-coprGetProjectChrootBuildConfig :: String -> String -> String -> String
+coprGetProjectChrootBuildConfig :: String -- ^ server
+                                -> String -- ^ owner
+                                -> String -- ^ project
+                                -> String -- ^ chroot
                                 -> IO Object
 coprGetProjectChrootBuildConfig server owner project chroot = do
   let path = "project-chroot/build-config"
@@ -190,7 +232,13 @@ coprGetProjectChrootBuildConfig server owner project chroot = do
 -- | monitor info for the latest project chroot builds.
 --
 -- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/monitor.py#_16
-coprMonitorProject :: String -> String -> String -> [String] -> IO Object
+--
+-- @since 0.2.0
+coprMonitorProject :: String -- ^ server
+                   -> String -- ^ owner
+                   -> String -- ^ project
+                   -> [String] -- ^ additional fields
+                   -> IO Object
 coprMonitorProject server owner project fields = do
   let path = "monitor"
       params = [makeItem "ownername" owner,
