@@ -16,7 +16,6 @@ module Web.Fedora.Copr.API
   , coprGetBuildSourceChroot
   , coprGetBuildSourceConfig
   , coprGetBuildList
-  , coprGetBuildPackageList
   , coprGetBuildChroot
   , coprGetBuildChrootList
   , coprGetBuildChrootConfig
@@ -104,14 +103,6 @@ coprGetBuildList server owner project params = do
       params' = [makeItem "ownername" owner,
                 makeItem "projectname" project] ++ params
   queryCopr server path params'
-
--- | get list of packages
---
--- https://pagure.io/copr/copr/blob/main/f/python/copr/v3/proxies/build.py#_46
-coprGetBuildPackageList :: String -> Query -> IO Object
-coprGetBuildPackageList server params = do
-  let path = "build/list"
-  queryCopr server path params
 
 -- # Build chroot
 
